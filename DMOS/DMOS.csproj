@@ -23,9 +23,4 @@
 		<GCCProject Include="Core\C\" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Core\Shell\Commands\" />
-	  <Folder Include="Core\Shell\Parsing\" />
-	</ItemGroup>
-
 </Project>
