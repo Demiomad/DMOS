@@ -44,6 +44,11 @@ namespace DMOS.Core.Shell
             return output.ToArray();
         }
 
+        /// <summary>
+        /// Parses the input into a command context.
+        /// </summary>
+        /// <param name="input">The input.</param>
+        /// <returns>A tuple containing the command name, and the parsed context.</returns>
         public static (string cmdName, CommandContext ctx) ParseContext(string input)
         {
             const string FlagPrefix = "--";
@@ -56,7 +61,6 @@ namespace DMOS.Core.Shell
             var parts = SplitQuotes(input);
             var name = parts[0];
 
-            // the name isnt important for parsing, we can skip it
             for (int i = 1; i < parts.Length; i++)
             {
                 var part = parts[i];
