@@ -43,6 +43,18 @@ namespace DMOS.Core.Shell
                     return CommandResult.Success;
                 }
             });
+
+            Commands.Add(new CommandDefinition()
+            {
+                Name = "clear",
+                Aliases = ["cls"],
+                Description = "Clears the console.",
+                Execute = ctx =>
+                {
+                    Console.Clear();
+                    return CommandResult.Success;
+                }
+            });
         }
 
         /// <summary>
@@ -54,7 +66,9 @@ namespace DMOS.Core.Shell
         {
             var (name, ctx) = Parser.ParseContext(input);
 
-            var cmd = Commands.FirstOrDefault(c => c.Name!.Equals(name, StringComparison.CurrentCultureIgnoreCase));
+            var cmd = Commands.FirstOrDefault(c => c.Name!.Equals(name, StringComparison.CurrentCultureIgnoreCase) ||
+                    c.Aliases.Contains(name.ToLower()));
+
             if (cmd == null)
             {
                 return new CommandResult()

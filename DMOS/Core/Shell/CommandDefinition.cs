@@ -15,6 +15,11 @@ namespace DMOS.Core.Shell
         public string? Name { get; set; }
 
         /// <summary>
+        /// The array of the command's aliases.
+        /// </summary>
+        public string[] Aliases { get; set; }
+
+        /// <summary>
         /// The command's description.
         /// </summary>
         public string? Description { get; set; }
