@@ -9,7 +9,6 @@ namespace DMOS.Core.Shell.Arguments
         public string Name { get; set; } = string.Empty;
         public string ShortName { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
-        public int Position { get; set; }
         public bool Required { get; set; }
 
         public override void SetDefaultValue()
