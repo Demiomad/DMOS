@@ -5,6 +5,14 @@
     <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Resources\Fonts\font.psf" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Fonts\font.psf" />
+  </ItemGroup>
+
   <!-- Core kernel packages -->
   <ItemGroup>
     <PackageReference Include="Cosmos.Kernel" Version="3.0.47" />
@@ -13,6 +21,11 @@
 
 	<ItemGroup>
 		<GCCProject Include="Core\C\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Core\Shell\Commands\" />
+	  <Folder Include="Core\Shell\Parsing\" />
 	</ItemGroup>
 
 </Project>

@@ -1,4 +1,7 @@
+using Cosmos.Kernel.System.Graphics;
+using DMOS.Core;
 using DMOS.Core.Shell;
+using DMOS.Extensions;
 using System;
 using System.Runtime;
 using System.Runtime.CompilerServices;
@@ -9,10 +12,13 @@ namespace DMOS
     /// <summary>
     /// Main kernel class - inherits from Cosmos.Kernel.System.Kernel.
     /// </summary>
-    public unsafe class Kernel : Sys.Kernel
+    public class Kernel : Sys.Kernel
     {
         protected override void BeforeRun()
         {
+            KernelConsole.Default?.SetFontFromResource("DMOS.Resources.Fonts.font.psf");
+
+            Console.WriteLine($"Welcome to {SysInfo.OSString}!");
             Shell.Init();
         }
 
