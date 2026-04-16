@@ -1,4 +1,9 @@
-﻿using DMOS.Core.Logging;
+﻿using Cosmos.Kernel.Core.Runtime;
+using Cosmos.Kernel.Core.Scheduler;
+using Cosmos.Kernel.HAL;
+using Cosmos.Kernel.System.Graphics;
+using DMOS.Core.Info;
+using DMOS.Core.Logging;
 using DMOS.Core.Shell.Parsing;
 using DMOS.Core.Shell.Utils;
 using System;
@@ -44,6 +49,13 @@ namespace DMOS.Core.Shell
                 Aliases = ["write", "print"],
                 OnRun = ctx =>
                 {
+                    static void PrintCommand(string? cmd, string? value)
+                    {
+                        Console.Write("  ");
+                        Console.Write(cmd!.PadRight(16));
+                        Console.WriteLine(value);
+                    }
+
                     if (ctx.TryGetArg(0, out var name))
                     {
                         var cmd = Commands.FirstOrDefault(c => c.Name!.Equals(name, StringComparison.CurrentCultureIgnoreCase));
@@ -77,7 +89,7 @@ namespace DMOS.Core.Shell
                     {
                         foreach (var cmd in Commands)
                         {
-                            Console.WriteLine($"{cmd.Name} - {cmd.Description}");
+                            PrintCommand(cmd.Name, cmd.Description);
                         }
                     }
 
@@ -97,6 +109,45 @@ namespace DMOS.Core.Shell
                     return CommandResult.Success;
                 }
             });
+
+            Commands.Add(new CommandDefinition()
+            {
+                Name = "sysfetch",
+                Description = "Displays system information.",
+                Usage = "sysfetch",
+                Aliases = ["sysinfo", "neofetch"],
+                OnRun = ctx =>
+                {
+                    static void PrintInfoLine(string label, string value)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.Write(label.PadRight(16));
+                        Console.ResetColor();
+
+                        Console.WriteLine(value);
+                    }
+
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine(OSInfo.FullString);
+                    Console.ResetColor();
+                    PrintInfoLine("Platform", PlatformHAL.PlatformName);
+                    PrintInfoLine("Date & Time", DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"));
+                    
+                    var defCons = KernelConsole.Default!;
+                    PrintInfoLine("Console", $"{defCons.Cols}x{defCons.Rows} chars");
+
+                    if (defCons.IsAvailable)
+                    {
+                        var canvas = defCons.Canvas;
+                        PrintInfoLine("Framebuffer",
+                            $"{canvas.Mode.Width}x{canvas.Mode.Height}@{(int)canvas.Mode.ColorDepth} {canvas.RefreshRate} Hz ({canvas.Name()})");
+                    }
+                    else
+                        PrintInfoLine("Framebuffer", "Unavailable");
+
+                    return CommandResult.Success;
+                }
+            });
         }
 
         /// <summary>
@@ -109,7 +160,7 @@ namespace DMOS.Core.Shell
             var (name, ctx) = Parser.GetContext(input);
 
             if (ctx == null)
-                return new CommandResult()
+                return new CommandResult
                 {
                     ExitCode = -1,
                     Message = "Could not create command context"
@@ -119,7 +170,7 @@ namespace DMOS.Core.Shell
                     || c.Aliases.Contains(name));
 
             if (cmd == null)
-                return new CommandResult()
+                return new CommandResult
                 {
                     ExitCode = -1,
                     Message = $"\"{name}\" is not a valid command."
