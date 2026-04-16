@@ -45,6 +45,13 @@ namespace DMOS.Core.Shell
         {
             var (name, ctx) = Parser.GetContext(input);
 
+            if (ctx == null)
+                return new CommandResult()
+                {
+                    ExitCode = -1,
+                    Message = "Could not create command context"
+                };
+
             var cmd = Commands.FirstOrDefault(c => c.Name!.Equals(name, StringComparison.CurrentCultureIgnoreCase) 
                     || c.Aliases.Contains(name));
 
