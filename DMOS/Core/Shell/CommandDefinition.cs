@@ -30,7 +30,7 @@ namespace DMOS.Core.Shell
         /// <summary>
         /// The command's aliases.
         /// </summary>
-        public string[]? Aliases { get; set; }
+        public string[] Aliases { get; set; } = [];
 
         /// <summary>
         /// The action that gets executed once the command runs.

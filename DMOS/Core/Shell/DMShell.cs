@@ -35,6 +35,55 @@ namespace DMOS.Core.Shell
                     return CommandResult.Success;
                 }
             });
+
+            Commands.Add(new CommandDefinition()
+            {
+                Name = "help",
+                Description = "Displays help infomration.",
+                Usage = "help [command]",
+                Aliases = ["write", "print"],
+                OnRun = ctx =>
+                {
+                    if (ctx.TryGetArg(0, out var name))
+                    {
+                        var cmd = Commands.FirstOrDefault(c => c.Name!.Equals(name, StringComparison.CurrentCultureIgnoreCase));
+
+                        if (cmd == null)
+                            return new CommandResult()
+                            {
+                                ExitCode = -1,
+                                Message = $"\"{name}\" is not a valid command."
+                            };
+
+                        var sb = new StringBuilder();
+
+                        sb.AppendLine($"{cmd.Name}:");
+                        sb.AppendLine($"\t{cmd.Description}");
+                        sb.AppendLine();
+                        sb.AppendLine($"\tUsage: {cmd.Usage}");
+
+                        if (cmd.Aliases.Length != 0)
+                        {
+                            sb.AppendLine();
+                            sb.AppendLine("\tAliases:");
+
+                            foreach (var alias in cmd.Aliases)
+                                sb.AppendLine($"\t\t- {alias}");
+                        }
+
+                        Console.Write(sb.ToString());
+                    }
+                    else
+                    {
+                        foreach (var cmd in Commands)
+                        {
+                            Console.WriteLine($"{cmd.Name} - {cmd.Description}");
+                        }
+                    }
+
+                    return CommandResult.Success;
+                }
+            });
         }
 
         /// <summary>
