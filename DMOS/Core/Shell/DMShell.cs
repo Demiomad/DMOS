@@ -84,6 +84,19 @@ namespace DMOS.Core.Shell
                     return CommandResult.Success;
                 }
             });
+
+            Commands.Add(new CommandDefinition()
+            {
+                Name = "clear",
+                Description = "Clears the screen.",
+                Usage = "clear",
+                Aliases = ["cls", "clear"],
+                OnRun = ctx =>
+                {
+                    Console.Clear();
+                    return CommandResult.Success;
+                }
+            });
         }
 
         /// <summary>
