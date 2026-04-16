@@ -55,10 +55,6 @@ namespace DMOS.Core.Shell.Parsing
 
             var parts = SplitQuotes(input);
             var name = parts[0];
-
-            if (parts.Length == 1)
-                return (name, null);
-
             var ctx = new CommandContext();
 
             for (int i = 1; i < parts.Length; i++)

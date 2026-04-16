@@ -1,4 +1,5 @@
-﻿using DMOS.Core.Shell.Parsing;
+﻿using DMOS.Core.Logging;
+using DMOS.Core.Shell.Parsing;
 using DMOS.Core.Shell.Utils;
 using System;
 using System.Collections.Generic;
@@ -90,9 +91,7 @@ namespace DMOS.Core.Shell
             var result = RunCommand(input);
 
             if (result != null && result.ExitCode != 0)
-            {
-                // TODO: Implement logger
-            }
+                Shared.Logger?.Log(LogLevel.Error, result.Message);
         }
     }
 }
