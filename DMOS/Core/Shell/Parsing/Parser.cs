@@ -1,8 +1,9 @@
-﻿using System;
+﻿using DMOS.Core.Shell.Contexts;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DMOS.Core.Shell
+namespace DMOS.Core.Shell.Parsing
 {
     /// <summary>
     /// Represents a parser.
@@ -10,25 +11,25 @@ namespace DMOS.Core.Shell
     public static class Parser
     {
         /// <summary>
-        /// Splits the string by whitespace, while respecting quoted groups.
+        /// Splits the string by whitespace, while also respecting quoted groups.
         /// </summary>
-        /// <param name="input">The raw input.</param>
+        /// <param name="input">The user input/</param>
         /// <returns>The parsed array.</returns>
         public static string[] SplitQuotes(string input)
         {
-            var insideQuote = false;
             var current = new StringBuilder();
             var output = new List<string>();
+            var insideQuotes = false;
 
             for (int i = 0; i < input.Length; i++)
             {
                 var ch = input[i];
 
                 if (ch == '\'' || ch == '"')
-                    insideQuote = !insideQuote;
+                    insideQuotes = !insideQuotes;
                 else if (char.IsWhiteSpace(ch))
                 {
-                    if (!insideQuote)
+                    if (!insideQuotes)
                     {
                         output.Add(current.ToString());
                         current.Clear();
@@ -41,25 +42,24 @@ namespace DMOS.Core.Shell
             }
 
             output.Add(current.ToString());
+
             return output.ToArray();
         }
 
-        /// <summary>
-        /// Parses the input into a command context.
-        /// </summary>
-        /// <param name="input">The input.</param>
-        /// <returns>A tuple containing the command name, and the parsed context.</returns>
-        public static (string cmdName, CommandContext ctx) ParseContext(string input)
+        public static (string name, CommandContext? ctx) GetContext(string input)
         {
             const string FlagPrefix = "--";
-            
-            var ctx = new CommandContext()
-            {
-                Input = input
-            };
+
+            if (string.IsNullOrEmpty(input))
+                return (string.Empty, null);
 
             var parts = SplitQuotes(input);
             var name = parts[0];
+
+            if (parts.Length == 1)
+                return (name, null);
+
+            var ctx = new CommandContext();
 
             for (int i = 1; i < parts.Length; i++)
             {
@@ -71,9 +71,7 @@ namespace DMOS.Core.Shell
                     ctx.Flags[flagName] = true;
                 }
                 else
-                {
                     ctx.Args.Add(part);
-                }
             }
 
             return (name, ctx);

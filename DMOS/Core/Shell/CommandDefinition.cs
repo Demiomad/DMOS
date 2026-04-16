@@ -1,11 +1,13 @@
-﻿using System;
+﻿using DMOS.Core.Shell.Contexts;
+using DMOS.Core.Shell.Utils;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace DMOS.Core.Shell
 {
     /// <summary>
-    /// Represents a command definition.
+    /// Represents a command's definition.
     /// </summary>
     public class CommandDefinition
     {
@@ -15,18 +17,24 @@ namespace DMOS.Core.Shell
         public string? Name { get; set; }
 
         /// <summary>
-        /// The array of the command's aliases.
-        /// </summary>
-        public string[] Aliases { get; set; }
-
-        /// <summary>
         /// The command's description.
         /// </summary>
         public string? Description { get; set; }
 
         /// <summary>
-        /// The action to execute.
+        /// The usage of this command.
+        /// Square brackets mean optional arguments, while angled brackets mean required arguments.
         /// </summary>
-        public Func<CommandContext, CommandResult> Execute { get; set; }
+        public string? Usage { get; set; }
+
+        /// <summary>
+        /// The command's aliases.
+        /// </summary>
+        public string[]? Aliases { get; set; }
+
+        /// <summary>
+        /// The action that gets executed once the command runs.
+        /// </summary>
+        public Func<CommandContext, CommandResult>? OnRun { get; set; }
     }
 }

@@ -1,6 +1,5 @@
 using Cosmos.Kernel.System.Graphics;
 using DMOS.Core;
-using DMOS.Core.Logging;
 using DMOS.Core.Shell;
 using DMOS.Extensions;
 using System;
@@ -15,18 +14,15 @@ namespace DMOS
     /// </summary>
     public class Kernel : Sys.Kernel
     {
-        public static Logger Logger { get; set; } = new() { Context = SysInfo.OSName };
-        private static Shell _sh = new();
-
         protected override void BeforeRun()
         {
             KernelConsole.Default?.SetFontFromResource("DMOS.Resources.Fonts.font.psf");
-            Logger.Log(LogLevel.Info, $"Welcome to {SysInfo.OSString}!");
+            Boot.InitializeCore();
         }
 
         protected override void Run()
         {
-            _sh.Run();
+            Shared.Shell.Run();
         }
     }
 }

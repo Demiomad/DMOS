@@ -1,0 +1,18 @@
+﻿using DMOS.Core.Shell;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace DMOS.Core
+{
+    /// <summary>
+    /// Global values.
+    /// </summary>
+    public static class Shared
+    {
+        /// <summary>
+        /// The system shell.
+        /// </summary>
+        public static DMShell Shell { get; set; }
+    }
+}
