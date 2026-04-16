@@ -26,7 +26,11 @@ namespace DMOS.Core.Shell
                 Aliases = ["write", "print"],
                 OnRun = ctx =>
                 {
-                    Console.WriteLine(string.Join(' ', ctx.Args.ToArray()));
+                    if (ctx.Args.Count == 0)
+                        Console.WriteLine();
+                    else
+                        Console.WriteLine(string.Join(' ', ctx.Args.ToArray()));
+
                     return CommandResult.Success;
                 }
             });
