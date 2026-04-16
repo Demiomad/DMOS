@@ -3,6 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net10.0</TargetFramework>
+	  <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,12 +16,33 @@
 
   <!-- Core kernel packages -->
   <ItemGroup>
-    <PackageReference Include="Cosmos.Kernel" Version="3.0.47" />
-    <PackageReference Include="Cosmos.Kernel.System" Version="3.0.47" />
+    <PackageReference Include="Cosmos.Kernel" Version="3.0.49" />
+    <PackageReference Include="Cosmos.Kernel.System" Version="3.0.49" />
   </ItemGroup>
 
 	<ItemGroup>
-		<GCCProject Include="Core\C\" />
+		<GCCProject Include=".\Core\C\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Update="Cosmos.Build.Analyzer.Patcher" Version="3.0.49">
+	    <PrivateAssets>all</PrivateAssets>
+	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
+	  <PackageReference Update="Cosmos.Build.Asm" Version="3.0.49" />
+	  <PackageReference Update="Cosmos.Build.Common" Version="3.0.49" />
+	  <PackageReference Update="Cosmos.Build.GCC" Version="3.0.49" />
+	  <PackageReference Update="Cosmos.Build.Ilc" Version="3.0.49" />
+	  <PackageReference Update="Cosmos.Build.Patcher" Version="3.0.49" />
+	  <PackageReference Update="Cosmos.Kernel.HAL.ARM64" Version="3.0.49" />
+	  <PackageReference Update="Cosmos.Kernel.HAL.X64" Version="3.0.49" />
+	  <PackageReference Update="Cosmos.Kernel.Native.ARM64" Version="3.0.49" />
+	  <PackageReference Update="Cosmos.Kernel.Native.MultiArch" Version="3.0.49" />
+	  <PackageReference Update="Cosmos.Kernel.Native.X64" Version="3.0.49" />
+	  <PackageReference Update="Cosmos.Kernel.SourceGenerators" Version="3.0.49">
+	    <PrivateAssets>all</PrivateAssets>
+	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	  </PackageReference>
 	</ItemGroup>
 
 </Project>
