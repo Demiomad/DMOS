@@ -1,15 +1,8 @@
-using Cosmos.Kernel.Core.CPU;
-using Cosmos.Kernel.Core.Runtime;
-using Cosmos.Kernel.HAL;
 using Cosmos.Kernel.System.Graphics;
 using DMOS.Core;
 using DMOS.Core.Info;
 using DMOS.Core.Logging;
 using DMOS.Extensions;
-using System;
-using System.Reflection;
-using System.Runtime;
-using System.Runtime.CompilerServices;
 using Sys = Cosmos.Kernel.System;
 
 namespace DMOS
