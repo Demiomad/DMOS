@@ -1,5 +1,5 @@
 ﻿using DMOS.Core.Logging;
-using DMOS.Core.Shell;
+using DMOS.Core.Shell.DMShell;
 using System;
 using System.Collections.Generic;
 using System.Text;
