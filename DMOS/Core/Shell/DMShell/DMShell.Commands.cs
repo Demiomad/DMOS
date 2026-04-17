@@ -138,6 +138,19 @@ namespace DMOS.Core.Shell.DMShell
 
             Commands.Add(new CommandDefinition()
             {
+                Name = "stop",
+                Description = "Halts the system.",
+                Usage = "stop",
+                Aliases = ["halt", "hlt"],
+                OnRun = ctx =>
+                {
+                    Cosmos.Kernel.System.Global.CurrentKernel?.Stop();
+                    return CommandResult.Success;
+                }
+            });
+
+            Commands.Add(new CommandDefinition()
+            {
                 Name = "sysfetch",
                 Description = "Displays system information.",
                 Usage = "sysfetch",
