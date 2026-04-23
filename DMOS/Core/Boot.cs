@@ -3,6 +3,8 @@ using DMOS.Core.Logging;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Cosmos.Kernel;
+using Cosmos.Kernel.Boot.Limine;
 
 namespace DMOS.Core
 {
@@ -21,7 +23,10 @@ namespace DMOS.Core
         /// </summary>
         public static void InitializeCore()
         {
-            BootTime = DateTime.Now;
+            unsafe
+            {
+                BootTime = DateTimeOffset.FromUnixTimeSeconds(Limine.BootTime.Response->BootTime).DateTime;
+            }
 
             Shared.Logger = new Logger();
 
