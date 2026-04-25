@@ -2,8 +2,11 @@ using Cosmos.Kernel.System.Graphics;
 using DMOS.Core;
 using DMOS.Core.Info;
 using DMOS.Core.Logging;
+using System.Drawing;
 using DMOS.Extensions;
 using Sys = Cosmos.Kernel.System;
+using Cosmos.Kernel.System.Mouse;
+using DMOS.Core.Shell.DMShell;
 
 namespace DMOS
 {
@@ -23,11 +26,21 @@ namespace DMOS
 
             Console.WriteLine($"Welcome to {OSInfo.FullString}!");
             Console.WriteLine();
+
+            Shared.Shell?.StartThread();
         }
 
         protected override void Run()
         {
-            Shared.Shell?.Run();
+            var font = KernelConsole.Default?.Font;
+            var canvas = KernelConsole.Default?.Canvas;
+            var width = canvas.Width;
+            var now = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+            var x = width - (now.Length * font.Width);
+
+            canvas.DrawFilledRectangle(Color.Black, x - 10, 10, width, 20);
+            canvas.DrawString(now, font, Color.White, x - 10, 10);
+            canvas.Display();
         }
     }
 }

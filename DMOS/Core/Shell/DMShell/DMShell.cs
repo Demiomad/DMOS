@@ -44,5 +44,19 @@ namespace DMOS.Core.Shell.DMShell
             if (result != null && result.ExitCode != 0)
                 Shared.Logger?.Log(LogLevel.Error, result.Message);
         }
+
+        /// <summary>
+        /// Starts a new shell thread.
+        /// </summary>
+        public void StartThread()
+        {
+            new System.Threading.Thread(() =>
+            {
+                while (true)
+                {
+                    Run();
+                }
+            }).Start();
+        }
     }
 }
