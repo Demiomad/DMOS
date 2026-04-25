@@ -34,9 +34,9 @@ namespace DMOS
         {
             var font = KernelConsole.Default?.Font;
             var canvas = KernelConsole.Default?.Canvas;
-            var width = canvas.Width;
+            var width = canvas!.Width;
             var now = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
-            var x = width - (now.Length * font.Width);
+            var x = width - (now.Length * font!.Width);
 
             canvas.DrawFilledRectangle(Color.Black, x - 10, 10, width, 20);
             canvas.DrawString(now, font, Color.White, x - 10, 10);
