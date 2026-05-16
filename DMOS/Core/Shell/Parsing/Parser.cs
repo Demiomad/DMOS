@@ -13,7 +13,7 @@ namespace DMOS.Core.Shell.Parsing
         /// <summary>
         /// Splits the string by whitespace, while also respecting quoted groups.
         /// </summary>
-        /// <param name="input">The user input/</param>
+        /// <param name="input">The user input.</param>
         /// <returns>The parsed array.</returns>
         public static string[] SplitQuotes(string input)
         {
